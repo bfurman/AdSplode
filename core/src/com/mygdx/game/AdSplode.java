@@ -100,7 +100,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		BlockFactory factory = new BlockFactory(world);
 
 		tester = factory.getBlock(2);
-		test2 = factory.getBlock(2);
+		test2 = factory.getBlock(1);
 
 
 		// Now the physics body of the bottom edge of the screen
@@ -146,7 +146,6 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		fixtureDef4.shape = edgeShape2;
 		bodyEdgeScreen.createFixture(fixtureDef4);
 		debugRenderer = new Box2DDebugRenderer();
-
 
 
 		edgeShape.dispose();

@@ -12,6 +12,10 @@ public class BlockFactory {
     }
     //alter from int to enum
     public Block getBlock(int blockId) {
+        if(blockId == 1) {
+            return new BasicBlock(world);
+        }
+
         return new LavaBlock(world);
     }
 }
