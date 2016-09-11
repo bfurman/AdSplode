@@ -8,8 +8,10 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public interface Block {
     final float PIXELS_TO_METERS = 100f;
+    final short PHYSICS_ENTITY = 0x1;    // 0001
+    final short WORLD_ENTITY = 0x1 << 1;
 
-    public void draw(Body body, Matrix4 camera);
+    public void draw(Matrix4 camera);
     public void trigger();
     public float getWidth();
     public float getHeight();

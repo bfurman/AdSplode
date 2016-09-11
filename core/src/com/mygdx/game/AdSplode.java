@@ -21,8 +21,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	Sprite sprite,sprite2;
 	Texture img;
 	World world;
-	Block tester;
-	Body noMove;
+	Block tester, test2;
 	Body body,body2;
 	Body bodyEdgeScreen;
 	Box2DDebugRenderer debugRenderer;
@@ -98,32 +97,12 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		shape.dispose();
 
 		// test factory
-		BlockFactory factory = new BlockFactory();
+		BlockFactory factory = new BlockFactory(world);
 
 		tester = factory.getBlock(2);
+		test2 = factory.getBlock(2);
 
-		BodyDef bodyDef4 = new BodyDef();
-		bodyDef4.type = BodyDef.BodyType.StaticBody;
-
-		float p1 = Gdx.graphics.getWidth()/PIXELS_TO_METERS/2 - 100/PIXELS_TO_METERS;
-		float p2 = Gdx.graphics.getHeight()/PIXELS_TO_METERS/2 - 100/PIXELS_TO_METERS;
-		bodyDef4.position.set(p1, p2);
-
-		noMove = world.createBody(bodyDef4);
-
-		FixtureDef fixtureDef5 = new FixtureDef();
-		fixtureDef5.filter.categoryBits = WORLD_ENTITY;
-		fixtureDef5.filter.maskBits = PHYSICS_ENTITY;
-		PolygonShape blocker = new PolygonShape();
-		blocker.setAsBox(tester.getWidth()/2 / PIXELS_TO_METERS, tester.getHeight()
-				/2 / PIXELS_TO_METERS);
-		fixtureDef5.shape = blocker;
-
-		noMove.createFixture(fixtureDef5);
-
-		blocker.dispose();
-
-
+		
 		// Now the physics body of the bottom edge of the screen
 		BodyDef bodyDef3 = new BodyDef();
 		bodyDef3.type = BodyDef.BodyType.StaticBody;
@@ -199,8 +178,8 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,
 				PIXELS_TO_METERS, 0);
 
-		tester.draw(noMove, camera.combined);
-
+		tester.draw(camera.combined);
+		test2.draw(camera.combined);
 		batch.begin();
 		if(drawSprite)
 			batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
