@@ -102,54 +102,8 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		tester = factory.getBlock(2);
 		test2 = factory.getBlock(1);
 
+		createWalls();
 
-		// Now the physics body of the bottom edge of the screen
-		BodyDef bodyDef3 = new BodyDef();
-		bodyDef3.type = BodyDef.BodyType.StaticBody;
-
-		float w = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
-		float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS - 50/PIXELS_TO_METERS;
-
-		bodyDef3.position.set(0,0);
-
-		//bottom edge
-		FixtureDef fixtureDef3 = new FixtureDef();
-		fixtureDef3.filter.categoryBits = WORLD_ENTITY;
-		fixtureDef3.filter.maskBits = PHYSICS_ENTITY;
-
-		EdgeShape edgeShape = new EdgeShape();
-		edgeShape.set(-w/2,-h/2,w/2,-h/2);
-		fixtureDef3.shape = edgeShape;
-
-		//bodyDef3.position.set(0,0);
-		//left wall
-		FixtureDef fixtureDef4 = new FixtureDef();
-		fixtureDef4.filter.categoryBits = WORLD_ENTITY;
-		fixtureDef4.filter.maskBits = PHYSICS_ENTITY;
-
-
-		EdgeShape edgeShape2 = new EdgeShape();
-		edgeShape2.set(-w/2,-h/2,-w/2, 10);
-		fixtureDef4.shape = edgeShape2;
-
-		bodyEdgeScreen = world.createBody(bodyDef3);
-		bodyEdgeScreen.createFixture(fixtureDef3);
-		bodyEdgeScreen.createFixture(fixtureDef4);
-
-		edgeShape2 = new EdgeShape();
-		edgeShape2.set(w/2,-h/2,w/2, 10);
-		fixtureDef4.shape = edgeShape2;
-		bodyEdgeScreen.createFixture(fixtureDef4);
-
-		edgeShape2 = new EdgeShape();
-		edgeShape2.set(w/2, 10, -w/2, 10);
-		fixtureDef4.shape = edgeShape2;
-		bodyEdgeScreen.createFixture(fixtureDef4);
-		debugRenderer = new Box2DDebugRenderer();
-
-
-		edgeShape.dispose();
-		edgeShape2.dispose();
 
 		Gdx.input.setInputProcessor(this);
 
@@ -288,5 +242,55 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+
+	public void createWalls() {
+		// Now the physics body of the bottom edge of the screen
+		BodyDef bodyDef3 = new BodyDef();
+		bodyDef3.type = BodyDef.BodyType.StaticBody;
+
+		float w = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
+		float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS - 50/PIXELS_TO_METERS;
+
+		bodyDef3.position.set(0,0);
+
+		//bottom edge
+		FixtureDef fixtureDef3 = new FixtureDef();
+		fixtureDef3.filter.categoryBits = WORLD_ENTITY;
+		fixtureDef3.filter.maskBits = PHYSICS_ENTITY;
+
+		EdgeShape edgeShape = new EdgeShape();
+		edgeShape.set(-w/2,-h/2,w/2,-h/2);
+		fixtureDef3.shape = edgeShape;
+
+		//bodyDef3.position.set(0,0);
+		//left wall
+		FixtureDef fixtureDef4 = new FixtureDef();
+		fixtureDef4.filter.categoryBits = WORLD_ENTITY;
+		fixtureDef4.filter.maskBits = PHYSICS_ENTITY;
+
+
+		EdgeShape edgeShape2 = new EdgeShape();
+		edgeShape2.set(-w/2,-h/2,-w/2, 10);
+		fixtureDef4.shape = edgeShape2;
+
+		bodyEdgeScreen = world.createBody(bodyDef3);
+		bodyEdgeScreen.createFixture(fixtureDef3);
+		bodyEdgeScreen.createFixture(fixtureDef4);
+
+		edgeShape2 = new EdgeShape();
+		edgeShape2.set(w/2,-h/2,w/2, 10);
+		fixtureDef4.shape = edgeShape2;
+		bodyEdgeScreen.createFixture(fixtureDef4);
+
+		edgeShape2 = new EdgeShape();
+		edgeShape2.set(w/2, 10, -w/2, 10);
+		fixtureDef4.shape = edgeShape2;
+		bodyEdgeScreen.createFixture(fixtureDef4);
+		debugRenderer = new Box2DDebugRenderer();
+
+
+		edgeShape.dispose();
+		edgeShape2.dispose();
 	}
 }

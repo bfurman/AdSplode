@@ -64,7 +64,7 @@ public class BasicBlock implements Block{
     @Override
     public void draw(Matrix4 camera) {
         //NOTE SHAPERENDERER USES ACTUAL PIXELS NOT PIXELS TO METERS LIEK THE REST OF LIBGDX
-        
+
         batch.setProjectionMatrix(camera);
 
         batch.setColor(color);
