@@ -102,7 +102,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		tester = factory.getBlock(2);
 		test2 = factory.getBlock(2);
 
-		
+
 		// Now the physics body of the bottom edge of the screen
 		BodyDef bodyDef3 = new BodyDef();
 		bodyDef3.type = BodyDef.BodyType.StaticBody;
@@ -129,7 +129,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 
 		EdgeShape edgeShape2 = new EdgeShape();
-		edgeShape2.set(-w/2,-h/2,-w/2,h/2);
+		edgeShape2.set(-w/2,-h/2,-w/2, 10);
 		fixtureDef4.shape = edgeShape2;
 
 		bodyEdgeScreen = world.createBody(bodyDef3);
@@ -137,7 +137,12 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		bodyEdgeScreen.createFixture(fixtureDef4);
 
 		edgeShape2 = new EdgeShape();
-		edgeShape2.set(w/2,-h/2,w/2,h/2);
+		edgeShape2.set(w/2,-h/2,w/2, 10);
+		fixtureDef4.shape = edgeShape2;
+		bodyEdgeScreen.createFixture(fixtureDef4);
+
+		edgeShape2 = new EdgeShape();
+		edgeShape2.set(w/2, 10, -w/2, 10);
 		fixtureDef4.shape = edgeShape2;
 		bodyEdgeScreen.createFixture(fixtureDef4);
 		debugRenderer = new Box2DDebugRenderer();
