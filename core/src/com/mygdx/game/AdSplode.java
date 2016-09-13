@@ -16,6 +16,8 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
+import java.util.Random;
+
 public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	SpriteBatch batch;
 	Sprite sprite,sprite2;
@@ -99,8 +101,8 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		// test factory
 		BlockFactory factory = new BlockFactory(world);
 
-		tester = factory.getBlock(2);
-		test2 = factory.getBlock(1);
+		tester = factory.getBlock(2, randomCoordinate());
+		test2 = factory.getBlock(1, randomCoordinate());
 
 		createWalls();
 
@@ -292,5 +294,18 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 		edgeShape.dispose();
 		edgeShape2.dispose();
+	}
+
+	public Vector2 randomCoordinate() {
+		Random generator = new Random();
+		float p1 = generator.nextFloat() * Gdx.graphics.getWidth()/PIXELS_TO_METERS/2;
+		float p2 = generator.nextFloat() * Gdx.graphics.getHeight()/PIXELS_TO_METERS/2;
+		generator = new Random();
+		boolean p1Flip = generator.nextBoolean();
+		generator = new Random();
+		boolean p2Flip = generator.nextBoolean();
+		p1 = p1Flip ? p1 * -1: p1;
+		p2 = p2Flip ? p2 * -1: p2;
+		return new Vector2(p1, p2);
 	}
 }

@@ -25,28 +25,18 @@ public class BasicBlock implements Block{
     Color color;
     float x,y, width, height;
 
-    BasicBlock(World scene) {
+    BasicBlock(World scene, float xPos, float yPos) {
         batch = new ShapeRenderer();
         world = scene;
 
-        Random generator = new Random();
         BodyDef bodyDef4 = new BodyDef();
         bodyDef4.type = BodyDef.BodyType.StaticBody;
-        float p1 = generator.nextFloat() * Gdx.graphics.getWidth()/PIXELS_TO_METERS/2;
-        float p2 = generator.nextFloat() * Gdx.graphics.getHeight()/PIXELS_TO_METERS/2;
-        generator = new Random();
-        boolean p1Flip = generator.nextBoolean();
-        generator = new Random();
-        boolean p2Flip = generator.nextBoolean();
-        x = p1Flip ? p1 * -1: p1;
-        y = p2Flip ? p2 * -1: p2;
+
         width = 50;
         height = 40;
         color = Color.NAVY;
 
-        System.out.println("Basic Block at " + x + " , " + y);
-
-        bodyDef4.position.set(x, y);
+        bodyDef4.position.set(xPos, yPos);
 
         body = world.createBody(bodyDef4);
 

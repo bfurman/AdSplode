@@ -22,24 +22,14 @@ public class LavaBlock implements Block{
     World world;
     Body body;
 
-    LavaBlock(World scene) {
+    LavaBlock(World scene, float xPos, float yPos) {
         sprite = new Sprite(new Texture("core/textures/lavafull.bmp"));
         batch = new SpriteBatch();
         world = scene;
-        Random generator = new Random();
         BodyDef bodyDef4 = new BodyDef();
         bodyDef4.type = BodyDef.BodyType.StaticBody;
-        float p1 = generator.nextFloat() * Gdx.graphics.getWidth()/PIXELS_TO_METERS/2;
-        float p2 = generator.nextFloat() * Gdx.graphics.getHeight()/PIXELS_TO_METERS/2;
-        generator = new Random();
-        boolean p1Flip = generator.nextBoolean();
-        generator = new Random();
-        boolean p2Flip = generator.nextBoolean();
-        p1 = p1Flip ? p1 * -1: p1;
-        p2 = p2Flip ? p2 * -1: p2;
-        System.out.println(p1 + " , " + p2);
 
-        bodyDef4.position.set(p1, p2);
+        bodyDef4.position.set(xPos, yPos);
 
         body = world.createBody(bodyDef4);
 

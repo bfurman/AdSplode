@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -11,11 +12,11 @@ public class BlockFactory {
         world = screen;
     }
     //alter from int to enum
-    public Block getBlock(int blockId) {
+    public Block getBlock(int blockId, Vector2 vec2) {
         if(blockId == 1) {
-            return new BasicBlock(world);
+            return new BasicBlock(world, vec2.x, vec2.y);
         }
 
-        return new LavaBlock(world);
+        return new LavaBlock(world, vec2.x, vec2.y);
     }
 }
