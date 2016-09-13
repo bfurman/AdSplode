@@ -8,4 +8,5 @@ package com.mygdx.game;
 public interface Entity {
     public int type();
     public void onContact();
+    public String contactDebug();
 }

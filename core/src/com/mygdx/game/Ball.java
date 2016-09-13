@@ -15,7 +15,7 @@ import Constants.PhysicsConstants;
 /**
  * Created by Bradley on 9/12/2016.
  */
-public class Ball {
+public class Ball implements Entity{
     World world;
     Body body;
     ShapeRenderer batch;
@@ -51,7 +51,7 @@ public class Ball {
         ballPhysics.restitution = 1f;
 
         body.createFixture(ballPhysics);
-
+        body.setUserData(this);
         blocker.dispose();
     }
 
@@ -79,4 +79,18 @@ public class Ball {
         return radius;
     }
 
+    @Override
+    public int type() {
+        return 1;
+    }
+
+    @Override
+    public void onContact() {
+
+    }
+
+    @Override
+    public String contactDebug() {
+        return "Ball";
+    }
 }

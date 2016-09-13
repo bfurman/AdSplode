@@ -48,7 +48,7 @@ public class BasicBlock implements Block{
         fixtureDef5.shape = blocker;
 
         body.createFixture(fixtureDef5);
-
+        body.setUserData(this);
         blocker.dispose();
     }
     @Override
@@ -89,5 +89,10 @@ public class BasicBlock implements Block{
     @Override
     public void onContact() {
 
+    }
+
+    @Override
+    public String contactDebug() {
+        return "BasicBlock";
     }
 }

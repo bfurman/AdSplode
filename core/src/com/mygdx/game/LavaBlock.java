@@ -42,7 +42,7 @@ public class LavaBlock implements Block{
         fixtureDef5.shape = blocker;
 
         body.createFixture(fixtureDef5);
-
+        body.setUserData(this);
         blocker.dispose();
     }
     @Override
@@ -83,5 +83,10 @@ public class LavaBlock implements Block{
 
     @Override
     public void onContact() {
+    }
+
+    @Override
+    public String contactDebug() {
+        return "LavaBlock";
     }
 }

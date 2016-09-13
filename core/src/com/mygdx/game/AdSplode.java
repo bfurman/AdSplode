@@ -45,7 +45,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	public void create() {
 		batch = new SpriteBatch();
 		img = new Texture("core/textures/badlogic.png");
-
+		System.out.println("creating app");
 		// Create two identical sprites slightly offset from each other vertically
 		sprite = new Sprite(img);
 		sprite.setPosition(-sprite.getWidth()/2,-sprite.getHeight()/2 +200);
@@ -109,7 +109,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 		createWalls();
 
-
+		createCollisionListener();
 		Gdx.input.setInputProcessor(this);
 
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.
@@ -312,5 +312,45 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		p1 = p1Flip ? p1 * -1: p1;
 		p2 = p2Flip ? p2 * -1: p2;
 		return new Vector2(p1, p2);
+	}
+
+	private void createCollisionListener() {
+		world.setContactListener(new ContactListener() {
+
+			@Override
+			public void beginContact(Contact contact) {
+				Fixture fixtureA = contact.getFixtureA();
+				Fixture fixtureB = contact.getFixtureB();
+				Body bodyA = fixtureA.getBody();
+				Body bodyB = fixtureB.getBody();
+				Entity A = (Entity)bodyA.getUserData();
+				Entity B = (Entity)bodyB.getUserData();
+				if (A != null && B != null) {
+					System.out.println("beginContact" + "between " + A.contactDebug() + " and " + B.contactDebug());
+				}
+			}
+
+			@Override
+			public void endContact(Contact contact) {
+				Fixture fixtureA = contact.getFixtureA();
+				Fixture fixtureB = contact.getFixtureB();
+				Body bodyA = fixtureA.getBody();
+				Body bodyB = fixtureB.getBody();
+				Entity A = (Entity)bodyA.getUserData();
+				Entity B = (Entity)bodyB.getUserData();
+				if (A != null && B != null) {
+					System.out.println("endContact" + "between " + A.contactDebug() + " and " + B.contactDebug());
+				}
+			}
+
+			@Override
+			public void preSolve(Contact contact, Manifold oldManifold) {
+			}
+
+			@Override
+			public void postSolve(Contact contact, ContactImpulse impulse) {
+			}
+
+		});
 	}
 }
