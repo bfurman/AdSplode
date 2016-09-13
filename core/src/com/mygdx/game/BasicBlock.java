@@ -80,4 +80,14 @@ public class BasicBlock implements Block{
     public float getHeight() {
         return height;
     }
+
+    @Override
+    public int type() {
+        return 0;
+    }
+
+    @Override
+    public void onContact() {
+
+    }
 }

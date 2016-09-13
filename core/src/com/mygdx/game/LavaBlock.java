@@ -75,4 +75,13 @@ public class LavaBlock implements Block{
     public float getHeight() {
         return sprite.getHeight();
     }
+
+    @Override
+    public int type() {
+        return 0;
+    }
+
+    @Override
+    public void onContact() {
+    }
 }
