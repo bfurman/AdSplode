@@ -18,6 +18,8 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import java.util.Random;
 
+import Constants.PhysicsConstants;
+
 public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	SpriteBatch batch;
 	Sprite sprite,sprite2;
@@ -27,15 +29,15 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	Body body,body2;
 	Body bodyEdgeScreen;
 	Box2DDebugRenderer debugRenderer;
-
+	Ball orb;
 	Matrix4 debugMatrix;
 	OrthographicCamera camera;
 
 
-	final float PIXELS_TO_METERS = 100f;
+	final float PIXELS_TO_METERS = PhysicsConstants.PIXELS_TO_METERS;
 
-	final short PHYSICS_ENTITY = 0x1;    // 0001
-	final short WORLD_ENTITY = 0x1 << 1; // 0010 or 0x2 in hex
+	final short PHYSICS_ENTITY = PhysicsConstants.PHYSICS_ENTITY;    // 0001
+	final short WORLD_ENTITY = PhysicsConstants.WORLD_ENTITY; // 0010 or 0x2 in hex
 	float torque = 0.0f;
 	boolean drawSprite = true;
 
@@ -103,6 +105,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 		tester = factory.getBlock(2, randomCoordinate());
 		test2 = factory.getBlock(1, randomCoordinate());
+		orb = new Ball(world, -.1f, .1f);
 
 		createWalls();
 
@@ -140,6 +143,8 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 		tester.draw(camera.combined);
 		test2.draw(camera.combined);
+		orb.draw(camera.combined);
+
 		batch.begin();
 		if(drawSprite)
 			batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
