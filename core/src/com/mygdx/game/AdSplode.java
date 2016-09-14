@@ -266,8 +266,8 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 		//bottom edge
 		FixtureDef fixtureDef3 = new FixtureDef();
-		fixtureDef3.filter.categoryBits = WORLD_ENTITY;
-		fixtureDef3.filter.maskBits = PHYSICS_ENTITY;
+		fixtureDef3.filter.categoryBits = PhysicsConstants.WALL_ENTITY;
+		//fixtureDef3.filter.maskBits = PHYSICS_ENTITY;
 
 		EdgeShape edgeShape = new EdgeShape();
 		edgeShape.set(-w/2,-h/2,w/2,-h/2);
@@ -276,8 +276,8 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		//bodyDef3.position.set(0,0);
 		//left wall
 		FixtureDef fixtureDef4 = new FixtureDef();
-		fixtureDef4.filter.categoryBits = WORLD_ENTITY;
-		fixtureDef4.filter.maskBits = PHYSICS_ENTITY;
+		fixtureDef4.filter.categoryBits = PhysicsConstants.WALL_ENTITY;
+		//fixtureDef4.filter.maskBits = PHYSICS_ENTITY;
 
 
 		EdgeShape edgeShape2 = new EdgeShape();
@@ -324,12 +324,15 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 			public void beginContact(Contact contact) {
 				Fixture fixtureA = contact.getFixtureA();
 				Fixture fixtureB = contact.getFixtureB();
-				Body bodyA = fixtureA.getBody();
-				Body bodyB = fixtureB.getBody();
-				Entity A = (Entity)bodyA.getUserData();
-				Entity B = (Entity)bodyB.getUserData();
-				if (A != null && B != null) {
-					System.out.println("beginContact" + "between " + A.contactDebug() + " and " + B.contactDebug());
+				//find more elegant way so that if they are in the same category allow collision but ignore contact
+				if (fixtureA.getFilterData().categoryBits != fixtureB.getFilterData().categoryBits) {
+					Body bodyA = fixtureA.getBody();
+					Body bodyB = fixtureB.getBody();
+					Entity A = (Entity) bodyA.getUserData();
+					Entity B = (Entity) bodyB.getUserData();
+					if (A != null && B != null) {
+						System.out.println("beginContact" + "between " + A.contactDebug() + " and " + B.contactDebug());
+					}
 				}
 			}
 

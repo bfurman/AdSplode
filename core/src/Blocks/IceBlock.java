@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Block;
 
+import Constants.PhysicsConstants;
+
 /**
  * Created by Bradley on 9/13/2016.
  */
@@ -33,8 +35,8 @@ public class IceBlock implements Block{
         body = world.createBody(iceBody);
 
         FixtureDef iceFixture = new FixtureDef();
-        iceFixture.filter.categoryBits = PHYSICS_ENTITY;
-        //iceFixture.filter.maskBits = PHYSICS_ENTITY;
+        iceFixture.filter.categoryBits = BLOCK_ENTITY;
+        iceFixture.filter.maskBits = PHYSICS_ENTITY | BLOCK_ENTITY | PhysicsConstants.WALL_ENTITY;
         iceFixture.density = .3f;
         iceFixture.friction = 0f;
         iceFixture.restitution = .2f;

@@ -36,8 +36,8 @@ public class BasicBlock implements Block {
         body = world.createBody(bodyDef4);
 
         FixtureDef fixtureDef5 = new FixtureDef();
-        fixtureDef5.filter.categoryBits = WORLD_ENTITY;
-        fixtureDef5.filter.maskBits = PHYSICS_ENTITY;
+        fixtureDef5.filter.categoryBits = BLOCK_ENTITY;
+        fixtureDef5.filter.maskBits = PHYSICS_ENTITY | BLOCK_ENTITY;
         PolygonShape blocker = new PolygonShape();
         blocker.setAsBox(width/2 / PIXELS_TO_METERS, height/2/PIXELS_TO_METERS);
         fixtureDef5.shape = blocker;
