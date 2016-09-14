@@ -1,6 +1,5 @@
-package com.mygdx.game;
+package Blocks;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,38 +9,42 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-
-import java.util.Random;
+import com.mygdx.game.Block;
 
 /**
- * Created by Bradley on 9/10/2016.
+ * Created by Bradley on 9/13/2016.
  */
-public class LavaBlock implements Block{
+public class IceBlock implements Block{
     Sprite sprite;
     SpriteBatch batch;
     World world;
     Body body;
 
-    LavaBlock(World scene, float xPos, float yPos) {
-        sprite = new Sprite(new Texture("core/textures/lavafull.bmp"));
+    public IceBlock(World scene, float xPos, float yPos) {
+        sprite = new Sprite(new Texture("core/textures/iceBlock.bmp"));
         batch = new SpriteBatch();
         world = scene;
-        BodyDef bodyDef4 = new BodyDef();
-        bodyDef4.type = BodyDef.BodyType.StaticBody;
+        BodyDef iceBody = new BodyDef();
+        iceBody.type = BodyDef.BodyType.DynamicBody;
 
-        bodyDef4.position.set(xPos, yPos);
+        iceBody.position.set(xPos, yPos);
+        iceBody.linearVelocity.set(0f, -1.0f);
 
-        body = world.createBody(bodyDef4);
+        body = world.createBody(iceBody);
 
-        FixtureDef fixtureDef5 = new FixtureDef();
-        fixtureDef5.filter.categoryBits = WORLD_ENTITY;
-        fixtureDef5.filter.maskBits = PHYSICS_ENTITY;
+        FixtureDef iceFixture = new FixtureDef();
+        iceFixture.filter.categoryBits = PHYSICS_ENTITY;
+        //iceFixture.filter.maskBits = PHYSICS_ENTITY;
+        iceFixture.density = .3f;
+        iceFixture.friction = 0f;
+        iceFixture.restitution = .2f;
+
         PolygonShape blocker = new PolygonShape();
         blocker.setAsBox(sprite.getWidth()/2 / PIXELS_TO_METERS, sprite.getHeight()
                 /2 / PIXELS_TO_METERS);
-        fixtureDef5.shape = blocker;
+        iceFixture.shape = blocker;
 
-        body.createFixture(fixtureDef5);
+        body.createFixture(iceFixture);
         body.setUserData(this);
         blocker.dispose();
     }
@@ -87,6 +90,6 @@ public class LavaBlock implements Block{
 
     @Override
     public String contactDebug() {
-        return "LavaBlock";
+        return "IceBlock";
     }
 }

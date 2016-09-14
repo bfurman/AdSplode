@@ -25,7 +25,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	Sprite sprite,sprite2;
 	Texture img;
 	World world;
-	Block tester, test2;
+	Block tester, test2, testIce;
 	Body body,body2;
 	Body bodyEdgeScreen;
 	Box2DDebugRenderer debugRenderer;
@@ -102,9 +102,11 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 		// test factory
 		BlockFactory factory = new BlockFactory(world);
-
-		tester = factory.getBlock(2, randomCoordinate());
+		Vector2 testIceFall = randomCoordinate();
+		tester = factory.getBlock(3, testIceFall);
 		test2 = factory.getBlock(1, randomCoordinate());
+		testIceFall.y+=.2f;
+		testIce = factory.getBlock(2, testIceFall);
 		orb = new Ball(world, -.1f, .1f);
 
 		createWalls();
@@ -143,6 +145,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 		tester.draw(camera.combined);
 		test2.draw(camera.combined);
+		testIce.draw(camera.combined);
 		orb.draw(camera.combined);
 
 		batch.begin();
