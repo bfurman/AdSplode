@@ -20,8 +20,8 @@ public class Ball implements Entity{
     Body body;
     ShapeRenderer batch;
     Color color;
-    float x,y, radius;
-
+    float radius;
+    // need to refactor for world being global
     Ball(World scene, float xPos, float yPos) {
         batch = new ShapeRenderer();
         world = scene;
@@ -52,7 +52,7 @@ public class Ball implements Entity{
     }
 
     public void draw(Matrix4 camera) {
-        //NOTE SHAPERENDERER USES ACTUAL PIXELS NOT PIXELS TO METERS LIEK THE REST OF LIBGDX
+        //NOTE SHAPERENDERER USES ACTUAL PIXELS NOT PIXELS TO METERS LIKE THE REST OF LIBGDX
 
         batch.setProjectionMatrix(camera);
 
@@ -65,7 +65,8 @@ public class Ball implements Entity{
         batch.end();
     }
 
-
+    // actions to be done specific to this entity, should be called in onContact and after behavior
+    // may be removed, if not repurposed for something like at the end of a timer
     public void trigger() {
 
     }
@@ -93,5 +94,38 @@ public class Ball implements Entity{
     @Override
     public void finishCreation() {
 
+    }
+
+    /**
+     * applies the torque to the physics body may be used for a power up
+     *
+     * @param force
+     * @param wake
+     */
+    public void applyTorque(float force, boolean wake) {
+        body.applyTorque(force, wake);
+    }
+
+    //everything below is for keyboard commands for now so they are debug methods
+
+    /**
+     * move left or right
+     *
+     * @param velocityX
+     * @param velocityY
+     * both params are the vector 2 of the force being applied
+     */
+    public void setLinearVelocity(float velocityX, float velocityY) {
+        body.setLinearVelocity(velocityX, velocityY);
+    }
+
+    /**
+     *
+     * @param vX
+     * @param vY
+     * @param wake libgdx entities can be a "sleep" this is to wake it and let it move
+     */
+    public void applyForceToCenter(float vX, float vY, boolean wake) {
+        body.applyForceToCenter(vX, vY, wake);
     }
 }

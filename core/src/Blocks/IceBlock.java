@@ -53,6 +53,7 @@ public class IceBlock implements Block{
     }
     @Override
     public void draw(Matrix4 camera) {
+        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
         sprite.setPosition((body.getPosition().x * PIXELS_TO_METERS) - sprite.
                         getWidth()/2 ,
                 (body.getPosition().y * PIXELS_TO_METERS) -sprite.getHeight()/2);

@@ -22,12 +22,10 @@ import java.util.Random;
 import Constants.PhysicsConstants;
 
 public class AdSplode extends ApplicationAdapter implements InputProcessor {
-	SpriteBatch batch;
-	Sprite sprite,sprite2;
 	Texture img;
 	public static World world; //refactor for world becoming a global variable
 	Block tester, test2, testIce;
-	Body body,body2;
+	Body body, body2;
 	Body bodyEdgeScreen;
 	Box2DDebugRenderer debugRenderer;
 	Ball orb;
@@ -45,62 +43,11 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void create() {
-		batch = new SpriteBatch();
 		img = new Texture("core/textures/badlogic.png");
 		System.out.println("creating app");
-		// Create two identical sprites slightly offset from each other vertically
-		sprite = new Sprite(img);
-		sprite.setPosition(-sprite.getWidth()/2,-sprite.getHeight()/2 +200);
-		sprite2 = new Sprite(img);
-		sprite2.setPosition(-sprite.getWidth()/2 + 20,-sprite.getHeight()/2 + 400);
 
 		world = new World(new Vector2(0, -1f),true);
 
-		// Sprite1's Physics body
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.DynamicBody;
-		bodyDef.position.set((sprite.getX() + sprite.getWidth()/2) /
-						PIXELS_TO_METERS,
-				(sprite.getY() + sprite.getHeight()/2) / PIXELS_TO_METERS);
-
-		body = world.createBody(bodyDef);
-
-
-		// Sprite2's physics body
-		BodyDef bodyDef2 = new BodyDef();
-		bodyDef2.type = BodyDef.BodyType.DynamicBody;
-		bodyDef2.position.set((sprite2.getX() + sprite2.getWidth()/2) /
-						PIXELS_TO_METERS,
-				(sprite2.getY() + sprite2.getHeight()/2) / PIXELS_TO_METERS);
-
-		body2 = world.createBody(bodyDef2);
-
-		// Both bodies have identical shape
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(sprite.getWidth()/2 / PIXELS_TO_METERS, sprite.getHeight()
-				/2 / PIXELS_TO_METERS);
-
-		// Sprite1
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.density = 0.1f;
-		fixtureDef.restitution = .9f;
-		fixtureDef.filter.categoryBits = PHYSICS_ENTITY;
-		//fixtureDef.filter.maskBits = WORLD_ENTITY;
-
-
-		// Sprite2
-		FixtureDef fixtureDef2 = new FixtureDef();
-		fixtureDef2.shape = shape;
-		fixtureDef2.density = 0.1f;
-		fixtureDef2.restitution = 1.0f;
-		fixtureDef2.filter.categoryBits = PHYSICS_ENTITY;
-		//fixtureDef2.filter.maskBits = WORLD_ENTITY;
-
-		body.createFixture(fixtureDef);
-		body2.createFixture(fixtureDef2);
-
-		shape.dispose();
 
 		// test factory
 		BlockFactory factory = new BlockFactory(world);
@@ -138,28 +85,14 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		}
 		//check blocks also
 		for (Entity toDestory: particleEntities) {
-			//check for destructions
+			//check fodestructionsns
 		}
 
 		particleListSize = particleEntities.size();
-		body.applyTorque(torque, true);
-		sprite.setPosition((body.getPosition().x * PIXELS_TO_METERS) - sprite.
-						getWidth()/2 ,
-				(body.getPosition().y * PIXELS_TO_METERS) -sprite.getHeight()/2 );
-
-
-		sprite.setRotation((float)Math.toDegrees(body.getAngle()));
-		sprite2.setPosition((body2.getPosition().x * PIXELS_TO_METERS) - sprite2.
-						getWidth()/2 ,
-				(body2.getPosition().y * PIXELS_TO_METERS) -sprite2.getHeight()/2 );
-		sprite2.setRotation((float)Math.toDegrees(body2.getAngle()));
+		orb.applyTorque(torque, true);
 
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		batch.setProjectionMatrix(camera.combined);
-		debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,
-				PIXELS_TO_METERS, 0);
 		for (Entity particle: particleEntities) {
 			particle.draw(camera.combined);
 		}
@@ -167,20 +100,9 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		test2.draw(camera.combined);
 		testIce.draw(camera.combined);
 		orb.draw(camera.combined);
-
+		debugMatrix = camera.combined.scale(PIXELS_TO_METERS,
+				PIXELS_TO_METERS, 0);
 		//particleEntities.forEach(i -> i.draw(camera.combined));
-
-		batch.begin();
-		if(drawSprite)
-			batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
-				sprite.getOriginY(),
-				sprite.getWidth(),sprite.getHeight(),sprite.getScaleX(),sprite.
-						getScaleY(),sprite.getRotation());
-		batch.draw(sprite2, sprite2.getX(), sprite2.getY(),sprite2.getOriginX(),
-				sprite2.getOriginY(),
-				sprite2.getWidth(),sprite2.getHeight(),sprite2.getScaleX(),sprite2.
-						getScaleY(),sprite2.getRotation());
-		batch.end();
 
 		debugRenderer.render(world, debugMatrix);
 
@@ -203,14 +125,14 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 
 		if(keycode == Input.Keys.RIGHT)
-			body.setLinearVelocity(1f, 0f);
+			orb.setLinearVelocity(1f, 0f);
 		if(keycode == Input.Keys.LEFT)
-			body.setLinearVelocity(-1f,0f);
+			orb.setLinearVelocity(-1f,0f);
 
 		if(keycode == Input.Keys.UP)
-			body.applyForceToCenter(0f,10f,true);
+			orb.applyForceToCenter(0f,10f,true);
 		if(keycode == Input.Keys.DOWN)
-			body.applyForceToCenter(0f, -10f, true);
+			orb.applyForceToCenter(0f, -10f, true);
 
 		// On brackets ( [ ] ) apply torque, either clock or counterclockwise
 		if(keycode == Input.Keys.RIGHT_BRACKET)
@@ -223,20 +145,21 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 			torque = 0.0f;
 
 		// If user hits spacebar, reset everything back to normal
-		if(keycode == Input.Keys.SPACE|| keycode == Input.Keys.NUM_2) {
+		/*if(keycode == Input.Keys.SPACE|| keycode == Input.Keys.NUM_2) {
 			body.setLinearVelocity(0f, 0f);
 			body.setAngularVelocity(0f);
 			torque = 0f;
 			sprite.setPosition(0f,0f);
 			body.setTransform(0f,0f,0f);
-		}
+		}*/
 
-		if(keycode == Input.Keys.COMMA) {
+		//code below will be useful for a different instance later on
+		/*if(keycode == Input.Keys.COMMA) {
 			body.getFixtureList().first().setRestitution(body.getFixtureList().first().getRestitution()-0.1f);
 		}
 		if(keycode == Input.Keys.PERIOD) {
 			body.getFixtureList().first().setRestitution(body.getFixtureList().first().getRestitution()+0.1f);
-		}
+		}*/
 		if(keycode == Input.Keys.ESCAPE || keycode == Input.Keys.NUM_1)
 			drawSprite = !drawSprite;
 
@@ -253,7 +176,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	// This could result in the object "spinning"
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		body.applyForce(1f,1f,screenX,screenY,true);
+		//body.applyForce(1f,1f,screenX,screenY,true);
 		//body.applyTorque(0.4f,true);
 		return true;
 	}
@@ -359,10 +282,10 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 						Entity effectA = A.onContact();
 						Entity effectB = B.onContact();
 						if (effectA != null) {
-							particleEntities.add((Entity)effectA);
+							particleEntities.add(effectA);
 						}
 						if (effectB != null) {
-							particleEntities.add((Entity)effectB);
+							particleEntities.add(effectB);
 						}
 					}
 				}
