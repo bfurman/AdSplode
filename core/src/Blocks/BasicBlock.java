@@ -9,6 +9,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Block;
+import com.mygdx.game.Entity;
+import com.mygdx.game.EntityStrategy;
+
+import Behaviors.BasicBehavior;
 
 /**
  * Created by Bradley on 9/10/2016.
@@ -18,6 +22,7 @@ public class BasicBlock implements Block {
     Body body;
     ShapeRenderer batch;
     Color color;
+    EntityStrategy behavior;
     float x,y, width, height;
 
     public BasicBlock(World scene, float xPos, float yPos) {
@@ -44,6 +49,7 @@ public class BasicBlock implements Block {
 
         body.createFixture(fixtureDef5);
         body.setUserData(this);
+        behavior = new BasicBehavior();
         blocker.dispose();
     }
     @Override
@@ -82,12 +88,18 @@ public class BasicBlock implements Block {
     }
 
     @Override
-    public void onContact() {
-
+    public Entity onContact() {
+        behavior.effect(body.getPosition().x, body.getPosition().y);
+        return null;
     }
 
     @Override
     public String contactDebug() {
         return "BasicBlock";
+    }
+
+    @Override
+    public void finishCreation() {
+
     }
 }

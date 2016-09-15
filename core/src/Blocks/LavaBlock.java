@@ -10,6 +10,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Block;
+import com.mygdx.game.Entity;
+import com.mygdx.game.EntityStrategy;
+
+import Behaviors.ExplosionBehavior;
 
 /**
  * Created by Bradley on 9/10/2016.
@@ -19,6 +23,7 @@ public class LavaBlock implements Block {
     SpriteBatch batch;
     World world;
     Body body;
+    EntityStrategy behavior;
 
     public LavaBlock(World scene, float xPos, float yPos) {
         sprite = new Sprite(new Texture("core/textures/lavafull.bmp"));
@@ -41,6 +46,7 @@ public class LavaBlock implements Block {
 
         body.createFixture(fixtureDef5);
         body.setUserData(this);
+        behavior = new ExplosionBehavior();
         blocker.dispose();
     }
     @Override
@@ -80,11 +86,19 @@ public class LavaBlock implements Block {
     }
 
     @Override
-    public void onContact() {
+    public Entity onContact() {
+        Entity toRet = behavior.effect(body.getPosition().x, body.getPosition().y);
+        // mark for destroy maybe
+        return toRet;
     }
 
     @Override
     public String contactDebug() {
         return "LavaBlock";
+    }
+
+    @Override
+    public void finishCreation() {
+
     }
 }

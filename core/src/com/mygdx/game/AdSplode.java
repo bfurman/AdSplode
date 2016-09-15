@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import Constants.PhysicsConstants;
@@ -24,7 +25,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	SpriteBatch batch;
 	Sprite sprite,sprite2;
 	Texture img;
-	World world;
+	public static World world; //refactor for world becoming a global variable
 	Block tester, test2, testIce;
 	Body body,body2;
 	Body bodyEdgeScreen;
@@ -32,7 +33,8 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	Ball orb;
 	Matrix4 debugMatrix;
 	OrthographicCamera camera;
-
+	ArrayList<Entity> particleEntities;
+	int particleListSize = 0;
 
 	final float PIXELS_TO_METERS = PhysicsConstants.PIXELS_TO_METERS;
 
@@ -108,7 +110,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		testIceFall.y+=.2f;
 		testIce = factory.getBlock(2, testIceFall);
 		orb = new Ball(world, -.1f, .1f);
-
+		particleEntities = new ArrayList<Entity>();
 		createWalls();
 
 		createCollisionListener();
@@ -121,9 +123,25 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public void render() {
 		camera.update();
+
+
 		// Step the physics simulation forward at a rate of 60hz
 		world.step(1f/60f, 6, 2);
 
+		//after world step check on all entities need to finish creation, and then mark as destroy
+		//and then update particle list size, world gets locked in middle of step which causes issues
+		//not using java 8 cause i need to update ide
+		if (particleListSize < particleEntities.size()) {
+			for (Entity item: particleEntities) {
+				item.finishCreation();
+			}
+		}
+		//check blocks also
+		for (Entity toDestory: particleEntities) {
+			//check for destructions
+		}
+
+		particleListSize = particleEntities.size();
 		body.applyTorque(torque, true);
 		sprite.setPosition((body.getPosition().x * PIXELS_TO_METERS) - sprite.
 						getWidth()/2 ,
@@ -142,11 +160,15 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		batch.setProjectionMatrix(camera.combined);
 		debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,
 				PIXELS_TO_METERS, 0);
-
+		for (Entity particle: particleEntities) {
+			particle.draw(camera.combined);
+		}
 		tester.draw(camera.combined);
 		test2.draw(camera.combined);
 		testIce.draw(camera.combined);
 		orb.draw(camera.combined);
+
+		//particleEntities.forEach(i -> i.draw(camera.combined));
 
 		batch.begin();
 		if(drawSprite)
@@ -161,6 +183,8 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		batch.end();
 
 		debugRenderer.render(world, debugMatrix);
+
+		particleListSize = particleEntities.size();
 	}
 
 	@Override
@@ -332,6 +356,14 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 					Entity B = (Entity) bodyB.getUserData();
 					if (A != null && B != null) {
 						System.out.println("beginContact" + "between " + A.contactDebug() + " and " + B.contactDebug());
+						Entity effectA = A.onContact();
+						Entity effectB = B.onContact();
+						if (effectA != null) {
+							particleEntities.add((Entity)effectA);
+						}
+						if (effectB != null) {
+							particleEntities.add((Entity)effectB);
+						}
 					}
 				}
 			}

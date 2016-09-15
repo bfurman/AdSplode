@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Block;
+import com.mygdx.game.Entity;
 
 import Constants.PhysicsConstants;
 
@@ -87,11 +88,17 @@ public class IceBlock implements Block{
     }
 
     @Override
-    public void onContact() {
+    public Entity onContact() {
+        return null;
     }
 
     @Override
     public String contactDebug() {
         return "IceBlock";
+    }
+
+    @Override
+    public void finishCreation() {
+
     }
 }

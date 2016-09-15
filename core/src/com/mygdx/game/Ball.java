@@ -81,12 +81,17 @@ public class Ball implements Entity{
     }
 
     @Override
-    public void onContact() {
-
+    public Entity onContact() {
+        return null;
     }
 
     @Override
     public String contactDebug() {
         return "Ball";
+    }
+
+    @Override
+    public void finishCreation() {
+
     }
 }
