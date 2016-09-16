@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Constants.EntityType;
 import Constants.PhysicsConstants;
 
 public class AdSplode extends ApplicationAdapter implements InputProcessor {
@@ -52,10 +53,10 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		// test factory
 		BlockFactory factory = new BlockFactory(world);
 		Vector2 testIceFall = randomCoordinate();
-		tester = factory.getBlock(3, testIceFall);
-		test2 = factory.getBlock(1, randomCoordinate());
+		tester = factory.getBlock(EntityType.LAVABALL, testIceFall);
+		test2 = factory.getBlock(EntityType.BLOCK, randomCoordinate());
 		testIceFall.y+=.2f;
-		testIce = factory.getBlock(2, testIceFall);
+		testIce = factory.getBlock(EntityType.ICEBLOCK, testIceFall);
 		orb = new Ball(world, -.1f, .1f);
 		particleEntities = new ArrayList<Entity>();
 		createWalls();
@@ -85,7 +86,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		}
 		//check blocks also
 		for (Entity toDestory: particleEntities) {
-			//check fodestructionsns
+			//check for destruction, expand to all entities not just the particle entities
 		}
 
 		particleListSize = particleEntities.size();

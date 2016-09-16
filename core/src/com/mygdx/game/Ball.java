@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import Constants.EntityType;
 import Constants.PhysicsConstants;
 
 /**
@@ -77,8 +78,8 @@ public class Ball implements Entity{
     }
 
     @Override
-    public int type() {
-        return 1;
+    public EntityType type() {
+        return EntityType.BALL;
     }
 
     @Override

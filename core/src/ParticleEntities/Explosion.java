@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.AdSplode;
 import com.mygdx.game.Entity;
 
+import Constants.EntityType;
+
 /**
  * Created by Bradley on 9/14/2016.
  */
@@ -59,8 +61,8 @@ public class Explosion implements Entity {
 
     //change type to enum eventually
     @Override
-    public int type() {
-        return 4;
+    public EntityType type() {
+        return EntityType.EXPLOSION;
     }
 
     @Override

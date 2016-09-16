@@ -13,6 +13,7 @@ import com.mygdx.game.Entity;
 import com.mygdx.game.EntityStrategy;
 
 import Behaviors.BasicBehavior;
+import Constants.EntityType;
 
 /**
  * Created by Bradley on 9/10/2016.
@@ -83,8 +84,8 @@ public class BasicBlock implements Block {
     }
 
     @Override
-    public int type() {
-        return 0;
+    public EntityType type() {
+        return EntityType.BLOCK;
     }
 
     @Override

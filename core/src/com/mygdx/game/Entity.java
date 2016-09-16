@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.math.Matrix4;
 
+import Constants.EntityType;
 import Constants.PhysicsConstants;
 
 /**
@@ -15,7 +16,7 @@ public interface Entity {
     final short WORLD_ENTITY = PhysicsConstants.WORLD_ENTITY; // 0010 or 0x2 in hex
     final short BLOCK_ENTITY = PhysicsConstants.BLOCK_ENTITY;
     public void draw(Matrix4 camera);
-    public int type();
+    public EntityType type();
     public Entity onContact();
     public String contactDebug();
     public void finishCreation();

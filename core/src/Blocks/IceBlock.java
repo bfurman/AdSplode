@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Block;
 import com.mygdx.game.Entity;
 
+import Constants.EntityType;
 import Constants.PhysicsConstants;
 
 /**
@@ -84,8 +85,8 @@ public class IceBlock implements Block{
     }
 
     @Override
-    public int type() {
-        return 0;
+    public EntityType type() {
+        return EntityType.ICEBLOCK;
     }
 
     @Override

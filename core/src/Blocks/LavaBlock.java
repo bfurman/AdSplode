@@ -14,6 +14,7 @@ import com.mygdx.game.Entity;
 import com.mygdx.game.EntityStrategy;
 
 import Behaviors.ExplosionBehavior;
+import Constants.EntityType;
 
 /**
  * Created by Bradley on 9/10/2016.
@@ -82,8 +83,8 @@ public class LavaBlock implements Block {
     }
 
     @Override
-    public int type() {
-        return 0;
+    public EntityType type() {
+        return EntityType.LAVABLOCK;
     }
 
     @Override
