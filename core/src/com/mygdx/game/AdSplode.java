@@ -105,7 +105,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 				PIXELS_TO_METERS, 0);
 		//particleEntities.forEach(i -> i.draw(camera.combined));
 
-		debugRenderer.render(world, debugMatrix);
+		debugRenderer.render(world, debugMatrix); //draws boundaries around physic bodies
 
 		particleListSize = particleEntities.size();
 	}
@@ -120,7 +120,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		return false;
 	}
-
+	// the key press is only for debugging it controls to ball to force collisions for now
 	@Override
 	public boolean keyUp(int keycode) {
 
@@ -154,7 +154,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 			body.setTransform(0f,0f,0f);
 		}*/
 
-		//code below will be useful for a different instance later on
+		//code below will be useful for a different instance later on(change elasticity of ball powerup)
 		/*if(keycode == Input.Keys.COMMA) {
 			body.getFixtureList().first().setRestitution(body.getFixtureList().first().getRestitution()-0.1f);
 		}
@@ -201,7 +201,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	public boolean scrolled(int amount) {
 		return false;
 	}
-
+	//create the walls
 	public void createWalls() {
 		// Now the physics body of the bottom edge of the screen
 		BodyDef bodyDef3 = new BodyDef();
@@ -264,7 +264,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		p2 = p2Flip ? p2 * -1: p2;
 		return new Vector2(p1, p2);
 	}
-
+	// collisionlistener is used by the world to get details about 2 entities contacting
 	private void createCollisionListener() {
 		world.setContactListener(new ContactListener() {
 

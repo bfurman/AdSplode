@@ -52,12 +52,18 @@ public class LavaBlock implements Block {
     }
     @Override
     public void draw(Matrix4 camera) {
+        //set rotation will probably be removed since it is a static entity, but kept it in for now,
+        // we may want to make a block in the future that rotates to make even more weird shots,
+        //actually that sounds cool, an industructable block that is static but rotates so it can launch,
+        // the ball at new angles but isnt always beneficial
         sprite.setRotation((float)Math.toDegrees(body.getAngle()));
         sprite.setPosition((body.getPosition().x * PIXELS_TO_METERS) - sprite.
                         getWidth()/2 ,
                 (body.getPosition().y * PIXELS_TO_METERS) -sprite.getHeight()/2);
 
         batch.setProjectionMatrix(camera);
+        //when drawing anything either sprite or shaperenderer it has to have the begin and end
+        //also you have to end a drawer before starting a different one
         batch.begin();
         batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
                 sprite.getOriginY(),

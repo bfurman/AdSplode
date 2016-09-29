@@ -26,7 +26,8 @@ public class Ball implements Entity{
     Ball(World scene, float xPos, float yPos) {
         batch = new ShapeRenderer();
         world = scene;
-
+        //bodydef is used to create the physics body for the world
+        //it is here whether you mark it static, dynamic, or kinematic(have no idea what kinematic does though)
         BodyDef bodyDef4 = new BodyDef();
         bodyDef4.type = BodyDef.BodyType.DynamicBody;
 
@@ -35,19 +36,27 @@ public class Ball implements Entity{
 
         bodyDef4.position.set(xPos, yPos);
 
+        //creates a body and adds it to the world using the body definition
         body = world.createBody(bodyDef4);
 
+        //fixture defintiion is used to define the physics characteristics of the body
         FixtureDef ballPhysics = new FixtureDef();
+        //category is for what type the ficture is
+        //mask is for what it is allowed to collide with, if no mask is defined it collides with
+        //everything
         ballPhysics.filter.categoryBits = PHYSICS_ENTITY;
 
         CircleShape blocker = new CircleShape();
         blocker.setRadius(radius/PIXELS_TO_METERS);
-        ballPhysics.shape = blocker;
+        ballPhysics.shape = blocker; //must have this regardless, it sets the collision shape so ball vs box
+        //there are more of these just these make sense for the ball
         ballPhysics.density = 0.1f;
         ballPhysics.friction = 0.1f;
+        //resitution is the same as elasticity and it is a percentage so 1 is 100% elasticity meaning no loss in energy
         ballPhysics.restitution = 1f;
 
         body.createFixture(ballPhysics);
+        //set the entity to the body so you can grab it inside the contact context of the collision listener
         body.setUserData(this);
         blocker.dispose();
     }
@@ -55,10 +64,10 @@ public class Ball implements Entity{
     public void draw(Matrix4 camera) {
         //NOTE SHAPERENDERER USES ACTUAL PIXELS NOT PIXELS TO METERS LIKE THE REST OF LIBGDX
 
-        batch.setProjectionMatrix(camera);
+        batch.setProjectionMatrix(camera); // must have this, it will normalize the scene
 
-        batch.setColor(color);
-        batch.begin(ShapeRenderer.ShapeType.Filled);
+        batch.setColor(color); //self explanatory
+        batch.begin(ShapeRenderer.ShapeType.Filled); //filled vs lined
 
         batch.circle(body.getPosition().x * PIXELS_TO_METERS,
                 body.getPosition().y * PIXELS_TO_METERS,
