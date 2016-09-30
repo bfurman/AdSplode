@@ -28,6 +28,14 @@ public class Explosion implements Entity {
     boolean toDispose = false;
     //small change to push
     //Particle stuff needs to be done
+
+    //TODO ok so the current way of doing this is wrong, looked up some box2d and libgdx stuff,
+    // the correct way to do this would be having a small ball shoot out at each angle,
+    // the current way you wouldnt be able to have say bunch of industructible blocks being able
+    // to block an explosion the ball in every angle method you would be able to accomplish this,
+    // but once it hits something at each angle it would stop at that point
+    // instead of destroying everything in a radius. so there are pros and cons to both, we could
+    // have 2 different type of explosion blocks i suppose which would be cool
     public Explosion(float x, float y) {
         batch = new ShapeRenderer();
         world = AdSplode.world;
