@@ -5,5 +5,5 @@ package Constants;
  */
 //expand as we add more
 public enum EntityType {
-    BALL, BLOCK, ICEBLOCK, LAVABLOCK, EXPLOSION, PADEL, LAVABALL
+    BALL, BLOCK, ICEBLOCK, LAVABLOCK, GHOSTBLOCK, EXPLOSION, PADEL, LAVABALL
 }

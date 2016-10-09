@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -15,9 +16,10 @@ import com.mygdx.game.EntityStrategy;
 
 import Behaviors.ExplosionBehavior;
 import Constants.EntityType;
+import Constants.Utilities;
 
 /**
- * Created by Bradley on 9/10/2016.
+ * On ball collision will cause a n explosion destroying surrounding blocks in a set radius
  */
 public class LavaBlock implements Block {
     Sprite sprite;
@@ -57,9 +59,8 @@ public class LavaBlock implements Block {
         //actually that sounds cool, an industructable block that is static but rotates so it can launch,
         // the ball at new angles but isnt always beneficial
         sprite.setRotation((float)Math.toDegrees(body.getAngle()));
-        sprite.setPosition((body.getPosition().x * PIXELS_TO_METERS) - sprite.
-                        getWidth()/2 ,
-                (body.getPosition().y * PIXELS_TO_METERS) -sprite.getHeight()/2);
+        Vector2 position = Utilities.spritePositionCalc(body, sprite);
+        sprite.setPosition(position.x, position.y);
 
         batch.setProjectionMatrix(camera);
         //when drawing anything either sprite or shaperenderer it has to have the begin and end
