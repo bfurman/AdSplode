@@ -29,7 +29,7 @@ public class IceBlock implements Block{
     SpriteBatch batch;
     World world;
     Body body;
-
+    boolean destroy = false;
     public IceBlock(World scene, float xPos, float yPos) {
         sprite = new Sprite(new Texture("core/textures/iceBlock.bmp"));
         batch = new SpriteBatch();
@@ -96,6 +96,8 @@ public class IceBlock implements Block{
 
     @Override
     public Entity onContact() {
+        //behavior
+        destroy = true;
         return null;
     }
 
@@ -107,5 +109,14 @@ public class IceBlock implements Block{
     @Override
     public void finishCreation() {
 
+    }
+
+    @Override
+    public boolean destroy() {
+        if(destroy) {
+            world.destroyBody(body);
+            return true;
+        }
+        return false;
     }
 }

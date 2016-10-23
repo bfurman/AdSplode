@@ -36,6 +36,8 @@ public class Explosion implements Entity {
     // but once it hits something at each angle it would stop at that point
     // instead of destroying everything in a radius. so there are pros and cons to both, we could
     // have 2 different type of explosion blocks i suppose which would be cool
+
+    //currently the explosion radius physics body doesnt expand with the shape draw
     public Explosion(float x, float y) {
         batch = new ShapeRenderer();
         world = AdSplode.world;
@@ -104,5 +106,10 @@ public class Explosion implements Entity {
             blocker.dispose();
             needsToFinish = false;
         }
+    }
+
+    @Override
+    public boolean destroy() {
+        return false;
     }
 }

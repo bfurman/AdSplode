@@ -9,7 +9,8 @@ import Constants.PhysicsConstants;
  * Created by Bradley on 9/12/2016.
  */
 
-//change type to return enum
+//im thinking this should be a super class to extend from instead of a interface
+//that way we can have default implementation and reduce a lot of other stuff
 public interface Entity {
     final float PIXELS_TO_METERS = PhysicsConstants.PIXELS_TO_METERS;
     final short PHYSICS_ENTITY = PhysicsConstants.PHYSICS_ENTITY;    // 0001
@@ -40,4 +41,9 @@ public interface Entity {
      * destruction
      */
     public void finishCreation();
+
+    /**
+     * if marked for destroy then destroy
+     */
+    public boolean destroy();
 }

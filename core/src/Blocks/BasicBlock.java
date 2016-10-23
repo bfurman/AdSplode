@@ -24,6 +24,8 @@ public class BasicBlock implements Block {
     ShapeRenderer batch;
     Color color;
     EntityStrategy behavior;
+    boolean destroy = false;
+    int frozen = 0;
     float x,y, width, height;
 
     public BasicBlock(World scene, float xPos, float yPos) {
@@ -91,6 +93,11 @@ public class BasicBlock implements Block {
     @Override
     public Entity onContact() {
         behavior.effect(body.getPosition().x, body.getPosition().y);
+        if (frozen <= 0) {
+            destroy = true;
+        } else {
+            frozen-= 1;
+        }
         return null;
     }
 
@@ -102,5 +109,14 @@ public class BasicBlock implements Block {
     @Override
     public void finishCreation() {
 
+    }
+
+    @Override
+    public boolean destroy() {
+        if(destroy) {
+            world.destroyBody(body);
+            return true;
+        }
+        return false;
     }
 }

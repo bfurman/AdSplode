@@ -138,4 +138,9 @@ public class Ball implements Entity{
     public void applyForceToCenter(float vX, float vY, boolean wake) {
         body.applyForceToCenter(vX, vY, wake);
     }
+
+    @Override
+    public boolean destroy() {
+        return false;
+    }
 }

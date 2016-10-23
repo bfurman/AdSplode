@@ -33,6 +33,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	Matrix4 debugMatrix;
 	OrthographicCamera camera;
 	ArrayList<Entity> particleEntities;
+	ArrayList<Block> blocks;
 	int particleListSize = 0;
 
 	final float PIXELS_TO_METERS = PhysicsConstants.PIXELS_TO_METERS;
@@ -59,6 +60,10 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		testIce = factory.getBlock(EntityType.ICEBLOCK, testIceFall);
 		orb = new Ball(world, -.1f, .1f);
 		particleEntities = new ArrayList<Entity>();
+		blocks = new ArrayList<Block>();
+		blocks.add(tester);
+		blocks.add(test2);
+		blocks.add(testIce);
 		createWalls();
 
 		createCollisionListener();
@@ -84,9 +89,17 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 				item.finishCreation();
 			}
 		}
-		//check blocks also
+		//check particle entities also
 		for (Entity toDestory: particleEntities) {
 			//check for destruction, expand to all entities not just the particle entities
+		}
+
+		//check blocks for destory
+		for (int index = 0; index < blocks.size(); index++) {
+			boolean wasDestroyed = blocks.get(index).destroy();
+			if (wasDestroyed) {
+				blocks.remove(index);
+			}
 		}
 
 		particleListSize = particleEntities.size();
@@ -97,9 +110,13 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		for (Entity particle: particleEntities) {
 			particle.draw(camera.combined);
 		}
-		tester.draw(camera.combined);
-		test2.draw(camera.combined);
-		testIce.draw(camera.combined);
+//		tester.draw(camera.combined);
+//		test2.draw(camera.combined);
+//		testIce.draw(camera.combined);
+		for (Block block: blocks) {
+			block.draw(camera.combined);
+		}
+
 		orb.draw(camera.combined);
 		debugMatrix = camera.combined.scale(PIXELS_TO_METERS,
 				PIXELS_TO_METERS, 0);

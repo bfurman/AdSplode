@@ -119,4 +119,8 @@ public class GhostBlock implements Block {
     public void finishCreation() {
 
     }
+    @Override
+    public boolean destroy() {
+        return false;
+    }
 }

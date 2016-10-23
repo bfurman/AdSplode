@@ -27,7 +27,7 @@ public class LavaBlock implements Block {
     World world;
     Body body;
     EntityStrategy behavior;
-
+    boolean destroy = false;
     public LavaBlock(World scene, float xPos, float yPos) {
         sprite = new Sprite(new Texture("core/textures/lavafull.bmp"));
         batch = new SpriteBatch();
@@ -97,7 +97,7 @@ public class LavaBlock implements Block {
     @Override
     public Entity onContact() {
         Entity toRet = behavior.effect(body.getPosition().x, body.getPosition().y);
-        // mark for destroy maybe
+        destroy = true;
         return toRet;
     }
 
@@ -109,5 +109,14 @@ public class LavaBlock implements Block {
     @Override
     public void finishCreation() {
 
+    }
+
+    @Override
+    public boolean destroy() {
+        if(destroy) {
+            world.destroyBody(body);
+            return true;
+        }
+        return false;
     }
 }
