@@ -25,44 +25,41 @@ import Constants.Utilities;
  * ice block collision, if the ball hits it, it will slow the ball down considerably.
  * This would be a block for later levels in the game to add more challenge.
  */
-public class GhostBlock implements Block {
+public class GhostBlock extends Block {
     Sprite sprite;
     SpriteBatch batch;
     World world;
     Body body;
 
 
-    public GhostBlock(float xPos, float yPos) {
+    public GhostBlock(World world, float xPos, float yPos) {
         //TODO get ghostly block image for this
-        sprite = new Sprite(new Texture("core/textures/iceBlock.bmp"));
-        batch = new SpriteBatch();
-        world = AdSplode.world;
-        BodyDef spectralBody = new BodyDef();
-        spectralBody.type = BodyDef.BodyType.DynamicBody;
-
-        spectralBody.position.set(xPos, yPos);
-        spectralBody.linearVelocity.set(0f, -1.0f);
-
-        body = world.createBody(spectralBody);
-
-        FixtureDef specterFixture = new FixtureDef();
-        specterFixture.filter.categoryBits = BLOCK_ENTITY;
-        specterFixture.filter.maskBits = PHYSICS_ENTITY |
-                       PhysicsConstants.WALL_ENTITY |
-                       PhysicsConstants.PADEL_ENTITY;
-        specterFixture.density = .3f;
-        specterFixture.friction = 0f;
-
-        PolygonShape blocker = new PolygonShape();
-        blocker.setAsBox(sprite.getWidth()/2 / PIXELS_TO_METERS, sprite.getHeight()
-                /2 / PIXELS_TO_METERS);
-        specterFixture.shape = blocker;
-
-        body.createFixture(specterFixture);
-        body.setUserData(this);
-        blocker.dispose();
+        super(world, xPos, yPos, "core/textures/iceBlock.bmp");
     }
 
+    @Override
+    protected BodyDef createBodyDef() {
+        BodyDef spectralBody = new BodyDef();
+        spectralBody.type = BodyDef.BodyType.DynamicBody;
+        spectralBody.linearVelocity.set(0f, -1.0f);
+        return spectralBody;
+    }
+
+    @Override
+    protected FixtureDef createFixtureDef() {
+        FixtureDef specterFixture = new FixtureDef();
+        specterFixture.filter.categoryBits = BLOCK_ENTITY;
+        specterFixture.density = .3f;
+        specterFixture.friction = 0f;
+        return specterFixture;
+    }
+
+    @Override
+    protected void setMaskBits(FixtureDef fixture) {
+        fixture.filter.maskBits = PHYSICS_ENTITY |
+                PhysicsConstants.WALL_ENTITY |
+                PhysicsConstants.PADEL_ENTITY;
+    }
     //really need to figure out why i put this in, may be make it a cause and effect so if it is hit
     //by a behavior we can chain different behaviors together to cause different results?
     //like maybe lava block explosion hitting an iceblock will cause the explosion to be canceled at
@@ -70,34 +67,6 @@ public class GhostBlock implements Block {
     @Override
     public void trigger() {
 
-    }
-
-    //maybe make a default on since it is starting to look like all blocks that use sprites will be
-    //identical, if a block wants to do something different it can override the method,
-    //can interfaces have default implementation?
-    @Override
-    public void draw(Matrix4 camera) {
-        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
-        Vector2 position = Utilities.spritePositionCalc(body, sprite);
-        sprite.setPosition(position.x, position.y);
-
-        batch.setProjectionMatrix(camera);
-        batch.begin();
-        batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
-                sprite.getOriginY(),
-                sprite.getWidth(),sprite.getHeight(),sprite.getScaleX(),sprite.
-                        getScaleY(),sprite.getRotation());
-        batch.end();
-    }
-
-    @Override
-    public float getWidth() {
-        return sprite.getWidth();
-    }
-
-    @Override
-    public float getHeight() {
-        return sprite.getHeight();
     }
 
     @Override

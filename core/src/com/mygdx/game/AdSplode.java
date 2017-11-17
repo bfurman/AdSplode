@@ -24,7 +24,7 @@ import Constants.PhysicsConstants;
 
 public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	Texture img;
-	public static World world; //refactor for world becoming a global variable
+	private static World world; //refactor for world becoming a global variable
 	Block tester, test2, testIce;
 	Body body, body2;
 	Body bodyEdgeScreen;

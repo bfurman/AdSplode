@@ -38,9 +38,9 @@ public class Explosion implements Entity {
     // have 2 different type of explosion blocks i suppose which would be cool
 
     //currently the explosion radius physics body doesnt expand with the shape draw
-    public Explosion(float x, float y) {
+    public Explosion(World scene, float x, float y) {
         batch = new ShapeRenderer();
-        world = AdSplode.world;
+        world = scene;
 
         initBodyDef = new BodyDef();
         initBodyDef.type = BodyDef.BodyType.StaticBody;

@@ -18,7 +18,7 @@ import Constants.EntityType;
 /**
  * Created by Bradley on 9/10/2016.
  */
-public class BasicBlock implements Block {
+public class BasicBlock extends Block {
     World world;
     Body body;
     ShapeRenderer batch;
@@ -92,7 +92,7 @@ public class BasicBlock implements Block {
 
     @Override
     public Entity onContact() {
-        behavior.effect(body.getPosition().x, body.getPosition().y);
+        behavior.effect(world, body.getPosition().x, body.getPosition().y);
         if (frozen <= 0) {
             destroy = true;
         } else {

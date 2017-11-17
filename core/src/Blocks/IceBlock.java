@@ -24,53 +24,33 @@ import Constants.Utilities;
  * and can collide with a padel freezing the padel preventing it from being redrawn
  * for a set amount of time.
  */
-public class IceBlock implements Block{
-    Sprite sprite;
-    SpriteBatch batch;
-    World world;
-    Body body;
-    boolean destroy = false;
+public class IceBlock extends  Block{
     public IceBlock(World scene, float xPos, float yPos) {
-        sprite = new Sprite(new Texture("core/textures/iceBlock.bmp"));
-        batch = new SpriteBatch();
-        world = scene;
+        super(scene, xPos, yPos, "core/textures/iceBlock.bmp");
+        //setBehavior
+    }
+
+    @Override
+    protected BodyDef createBodyDef()  {
         BodyDef iceBody = new BodyDef();
         iceBody.type = BodyDef.BodyType.DynamicBody;
-
-        iceBody.position.set(xPos, yPos);
         iceBody.linearVelocity.set(0f, -1.0f);
+        return iceBody;
+    }
 
-        body = world.createBody(iceBody);
-
+    @Override
+    protected FixtureDef createFixtureDef() {
         FixtureDef iceFixture = new FixtureDef();
         iceFixture.filter.categoryBits = BLOCK_ENTITY;
-        iceFixture.filter.maskBits = PHYSICS_ENTITY | BLOCK_ENTITY | PhysicsConstants.WALL_ENTITY;
         iceFixture.density = .3f;
         iceFixture.friction = 0f;
         iceFixture.restitution = .2f;
-
-        PolygonShape blocker = new PolygonShape();
-        blocker.setAsBox(sprite.getWidth()/2 / PIXELS_TO_METERS, sprite.getHeight()
-                /2 / PIXELS_TO_METERS);
-        iceFixture.shape = blocker;
-
-        body.createFixture(iceFixture);
-        body.setUserData(this);
-        blocker.dispose();
+        return iceFixture;
     }
-    @Override
-    public void draw(Matrix4 camera) {
-        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
-        Vector2 position = Utilities.spritePositionCalc(body, sprite);
-        sprite.setPosition(position.x, position.y);
 
-        batch.setProjectionMatrix(camera);
-        batch.begin();
-        batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
-                sprite.getOriginY(),
-                sprite.getWidth(),sprite.getHeight(),sprite.getScaleX(),sprite.
-                        getScaleY(),sprite.getRotation());
-        batch.end();
+    @Override
+    protected void setMaskBits(FixtureDef fixture) {
+        fixture.filter.maskBits = PHYSICS_ENTITY | BLOCK_ENTITY | PhysicsConstants.WALL_ENTITY;
     }
 
     //trigger will be for functionality on ball colliding with block
@@ -80,25 +60,8 @@ public class IceBlock implements Block{
     }
 
     @Override
-    public float getWidth() {
-        return sprite.getWidth();
-    }
-
-    @Override
-    public float getHeight() {
-        return sprite.getHeight();
-    }
-
-    @Override
     public EntityType type() {
         return EntityType.ICEBLOCK;
-    }
-
-    @Override
-    public Entity onContact() {
-        //behavior
-        destroy = true;
-        return null;
     }
 
     @Override
@@ -109,14 +72,5 @@ public class IceBlock implements Block{
     @Override
     public void finishCreation() {
 
-    }
-
-    @Override
-    public boolean destroy() {
-        if(destroy) {
-            world.destroyBody(body);
-            return true;
-        }
-        return false;
     }
 }
