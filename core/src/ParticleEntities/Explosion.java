@@ -22,7 +22,7 @@ public class Explosion implements Entity {
     ShapeRenderer batch;
     BodyDef initBodyDef;
     boolean needsToFinish;
-    final float startRadius = .7f;
+    final float startRadius = 0.1f;
     final float endRadius = 3.5f;
     float currentRadius;
     boolean toDispose = false;
@@ -61,7 +61,7 @@ public class Explosion implements Entity {
                     body.getPosition().y * PIXELS_TO_METERS,
                     currentRadius);
             batch.end();
-            currentRadius += .2f;
+            currentRadius += .1f;
             //TODO update fixture with new size of the radius so physics shape grows as well
             if (currentRadius > endRadius) {
                 toDispose = true;
@@ -110,6 +110,9 @@ public class Explosion implements Entity {
 
     @Override
     public boolean destroy() {
-        return false;
+        if (toDispose) {
+            world.destroyBody(body);
+        }
+        return toDispose;
     }
 }

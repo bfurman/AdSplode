@@ -53,6 +53,8 @@ public class BasicBlock extends Block {
         body.createFixture(fixtureDef5);
         body.setUserData(this);
         behavior = new BasicBehavior();
+        setBehavior(behavior);
+        setBody(body);
         blocker.dispose();
     }
     @Override

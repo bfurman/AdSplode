@@ -37,6 +37,7 @@ public abstract class Block implements Entity {
     public Block(World scene, float xPos, float yPos, String texture) {
         setSprite(new Sprite(new Texture(texture)));
         setBatch(new SpriteBatch());
+        world = scene;
 
         BodyDef bodyDef4 = createBodyDef();
         bodyDef4.position.set(xPos, yPos);
@@ -82,7 +83,8 @@ public abstract class Block implements Entity {
     }
 
     public Entity onContact() {
-        Entity toRet = getBehavior().effect(getBody().getPosition().x, getBody().getPosition().y);
+        Entity toRet = getBehavior().effect(world,
+                getBody().getPosition().x, getBody().getPosition().y);
         markAsDestroyed(true);
         return toRet;
     }

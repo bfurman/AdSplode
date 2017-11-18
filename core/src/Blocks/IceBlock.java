@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Block;
 import com.mygdx.game.Entity;
 
+import Behaviors.BasicBehavior;
 import Constants.EntityType;
 import Constants.PhysicsConstants;
 import Constants.Utilities;
@@ -27,6 +28,7 @@ import Constants.Utilities;
 public class IceBlock extends  Block{
     public IceBlock(World scene, float xPos, float yPos) {
         super(scene, xPos, yPos, "core/textures/iceBlock.bmp");
+        setBehavior(new BasicBehavior());
         //setBehavior
     }
 

@@ -90,8 +90,11 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 			}
 		}
 		//check particle entities also
-		for (Entity toDestory: particleEntities) {
+		for (int index = 0; index < particleEntities.size(); index++) {
 			//check for destruction, expand to all entities not just the particle entities
+			if (particleEntities.get(index).destroy()) {
+				particleEntities.remove(index);
+			}
 		}
 
 		//check blocks for destory
