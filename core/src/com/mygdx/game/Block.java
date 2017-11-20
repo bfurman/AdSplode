@@ -54,6 +54,7 @@ public abstract class Block implements Entity {
 
         getBody().createFixture(fixtureDef5);
         getBody().setUserData(this);
+        System.out.println(contactDebug() + " x:" + xPos + " y:" + yPos);
         blocker.dispose();
     }
 
@@ -156,7 +157,7 @@ public abstract class Block implements Entity {
      * @param fixture
      */
     protected void setMaskBits(FixtureDef fixture) {
-        fixture.filter.maskBits =  PHYSICS_ENTITY | BLOCK_ENTITY;
+        fixture.filter.maskBits =  PHYSICS_ENTITY | BLOCK_ENTITY | EFFECT_ENTITY;
     }
 
     protected FixtureDef createFixtureDef() {

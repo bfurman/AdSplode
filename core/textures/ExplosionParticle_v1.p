@@ -2,8 +2,8 @@ Untitled
 - Delay -
 active: false
 - Duration - 
-lowMin: 1000.0
-lowMax: 1000.0
+lowMin: 500.0
+lowMax: 500.0
 - Count - 
 min: 0
 max: 500
@@ -78,8 +78,6 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Y Scale - 
-active: false
 - Velocity - 
 active: true
 lowMin: 0.0
@@ -110,13 +108,13 @@ timeline2: 1.0
 active: false
 - Wind - 
 active: false
-- Gravity - 
+- Gravity -
 active: false
 - Tint - 
 colorsCount: 6
-colors0: 0.0
-colors1: 0.0
-colors2: 0.0
+colors0: 1.0
+colors1: 0.12156863
+colors2: 0.047058824
 colors3: 1.0
 colors4: 0.12156863
 colors5: 0.047058824
@@ -146,7 +144,6 @@ aligned: false
 additive: true
 behind: false
 premultipliedAlpha: false
-spriteMode: single
 - Image Paths -
 particle.png
 

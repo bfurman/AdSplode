@@ -58,7 +58,7 @@ public class GhostBlock extends Block {
     protected void setMaskBits(FixtureDef fixture) {
         fixture.filter.maskBits = PHYSICS_ENTITY |
                 PhysicsConstants.WALL_ENTITY |
-                PhysicsConstants.PADEL_ENTITY;
+                PhysicsConstants.PADEL_ENTITY | EFFECT_ENTITY;
     }
     //really need to figure out why i put this in, may be make it a cause and effect so if it is hit
     //by a behavior we can chain different behaviors together to cause different results?

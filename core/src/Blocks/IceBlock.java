@@ -52,7 +52,10 @@ public class IceBlock extends  Block{
 
     @Override
     protected void setMaskBits(FixtureDef fixture) {
-        fixture.filter.maskBits = PHYSICS_ENTITY | BLOCK_ENTITY | PhysicsConstants.WALL_ENTITY;
+        fixture.filter.maskBits = PHYSICS_ENTITY
+                | BLOCK_ENTITY
+                | PhysicsConstants.WALL_ENTITY
+                | EFFECT_ENTITY;
     }
 
     //trigger will be for functionality on ball colliding with block

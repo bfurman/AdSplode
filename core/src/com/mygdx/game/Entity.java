@@ -16,6 +16,7 @@ public interface Entity {
     final short PHYSICS_ENTITY = PhysicsConstants.PHYSICS_ENTITY;    // 0001
     final short WORLD_ENTITY = PhysicsConstants.WORLD_ENTITY; // 0010 or 0x2 in hex
     final short BLOCK_ENTITY = PhysicsConstants.BLOCK_ENTITY;
+    final short EFFECT_ENTITY = PhysicsConstants.EFFECT_ENTITY;
     /**
      * every entity will be drawn in some way, however many different entities will be drawn
      * differently so each one will have to implement it on its own to suit each entities need.

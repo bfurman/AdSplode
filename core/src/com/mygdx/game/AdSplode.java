@@ -53,14 +53,22 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 		// test factory
 		BlockFactory factory = new BlockFactory(world);
+		blocks = new ArrayList<Block>();
 		Vector2 testIceFall = randomCoordinate();
 		tester = factory.getBlock(EntityType.LAVABALL, testIceFall);
 		test2 = factory.getBlock(EntityType.BLOCK, randomCoordinate());
 		testIceFall.y+=.2f;
 		testIce = factory.getBlock(EntityType.ICEBLOCK, testIceFall);
+		testIceFall.x+=.5f;
+		blocks.add(factory.getBlock(EntityType.BLOCK, testIceFall));
+		testIceFall.y-=.4f;
+		blocks.add(factory.getBlock(EntityType.BLOCK, testIceFall));
+		testIceFall.y-=.4f;
+		blocks.add(factory.getBlock(EntityType.BLOCK, testIceFall));
+
 		orb = new Ball(world, -.1f, .1f);
 		particleEntities = new ArrayList<Entity>();
-		blocks = new ArrayList<Block>();
+
 		blocks.add(tester);
 		blocks.add(test2);
 		blocks.add(testIce);
@@ -108,7 +116,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		particleListSize = particleEntities.size();
 		orb.applyTorque(torque, true);
 
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		for (Entity particle: particleEntities) {
 			particle.draw(camera.combined);

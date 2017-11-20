@@ -45,6 +45,7 @@ public class Ball implements Entity{
         //mask is for what it is allowed to collide with, if no mask is defined it collides with
         //everything
         ballPhysics.filter.categoryBits = PHYSICS_ENTITY;
+        ballPhysics.filter.maskBits = ~EFFECT_ENTITY;
 
         CircleShape blocker = new CircleShape();
         blocker.setRadius(radius/PIXELS_TO_METERS);
