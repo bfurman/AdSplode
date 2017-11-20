@@ -28,6 +28,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	Block tester, test2, testIce;
 	Body body, body2;
 	Body bodyEdgeScreen;
+	Padel padel;
 	Box2DDebugRenderer debugRenderer;
 	Ball orb;
 	Matrix4 debugMatrix;
@@ -97,6 +98,10 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 				item.finishCreation();
 			}
 		}
+		if (padel != null) {
+			padel.finishCreation();
+		}
+
 		//check particle entities also
 		for (int index = 0; index < particleEntities.size(); index++) {
 			//check for destruction, expand to all entities not just the particle entities
@@ -121,6 +126,11 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		for (Entity particle: particleEntities) {
 			particle.draw(camera.combined);
 		}
+
+		if (padel != null) {
+			padel.draw(camera.combined);
+		}
+
 //		tester.draw(camera.combined);
 //		test2.draw(camera.combined);
 //		testIce.draw(camera.combined);
@@ -205,8 +215,9 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	// This could result in the object "spinning"
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		//body.applyForce(1f,1f,screenX,screenY,true);
-		//body.applyTorque(0.4f,true);
+		padel = new Padel(world, screenX, Gdx.graphics.
+				getHeight() - screenY);
+		System.out.println("X:" + screenX + ", Y:" + screenY);
 		return true;
 	}
 
@@ -217,7 +228,11 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
+		padel.addVector(screenX, Gdx.graphics.
+				getHeight() - screenY);
+		System.out.println("X:" + screenX + ", Y:" + (Gdx.graphics.
+				getHeight() - screenY));
+		return true;
 	}
 
 	@Override
