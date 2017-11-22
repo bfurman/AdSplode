@@ -80,6 +80,8 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.
 				getHeight());
+		System.out.println("Camera x:" + Gdx.graphics.getWidth()/PIXELS_TO_METERS/2);
+		System.out.println("Camera y:" +Gdx.graphics.getHeight()/PIXELS_TO_METERS/2);
 	}
 
 	@Override
@@ -215,6 +217,9 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 	// This could result in the object "spinning"
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if (padel != null) {
+			padel.destroy();
+		}
 		padel = new Padel(world, screenX, Gdx.graphics.
 				getHeight() - screenY);
 		System.out.println("X:" + screenX + ", Y:" + screenY);
@@ -223,15 +228,16 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
+		padel.finishBuild();
+		return true;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		padel.addVector(screenX, Gdx.graphics.
 				getHeight() - screenY);
-		System.out.println("X:" + screenX + ", Y:" + (Gdx.graphics.
-				getHeight() - screenY));
+/*		System.out.println("X:" + screenX + ", Y:" + (Gdx.graphics.
+				getHeight() - screenY));*/
 		return true;
 	}
 
@@ -251,7 +257,7 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		bodyDef3.type = BodyDef.BodyType.StaticBody;
 
 		float w = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
-		float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS - 50/PIXELS_TO_METERS;
+		float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS;
 
 		bodyDef3.position.set(0,0);
 
@@ -278,14 +284,15 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 		bodyEdgeScreen = world.createBody(bodyDef3);
 		bodyEdgeScreen.createFixture(fixtureDef3);
 		bodyEdgeScreen.createFixture(fixtureDef4);
-
+		//rightWall
 		edgeShape2 = new EdgeShape();
 		edgeShape2.set(w/2,-h/2,w/2, 10);
 		fixtureDef4.shape = edgeShape2;
+		fixtureDef4.shape = edgeShape2;
 		bodyEdgeScreen.createFixture(fixtureDef4);
-
+		//top wall
 		edgeShape2 = new EdgeShape();
-		edgeShape2.set(w/2, 10, -w/2, 10);
+		edgeShape2.set(w/2, h/2, -w/2, h/2);
 		fixtureDef4.shape = edgeShape2;
 		bodyEdgeScreen.createFixture(fixtureDef4);
 		debugRenderer = new Box2DDebugRenderer();
