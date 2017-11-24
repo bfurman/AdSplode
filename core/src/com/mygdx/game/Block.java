@@ -36,6 +36,7 @@ public abstract class Block implements Entity {
 
     public Block(World scene, float xPos, float yPos, String texture) {
         setSprite(new Sprite(new Texture(texture)));
+        sprite.setSize(Utilities.BLOCK_WIDTH, Utilities.BLOCK_HEIGHT);
         setBatch(new SpriteBatch());
         world = scene;
 

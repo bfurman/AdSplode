@@ -23,7 +23,6 @@ import Constants.EntityType;
 import Constants.PhysicsConstants;
 
 public class AdSplode extends ApplicationAdapter implements InputProcessor {
-	Texture img;
 	private static World world; //refactor for world becoming a global variable
 	Block tester, test2, testIce;
 	Body body, body2;
@@ -46,7 +45,6 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void create() {
-		img = new Texture("core/textures/badlogic.png");
 		System.out.println("creating app");
 
 		world = new World(new Vector2(0, -1f),true);
@@ -152,7 +150,6 @@ public class AdSplode extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void dispose() {
-		img.dispose();
 		world.dispose();
 	}
 

@@ -53,7 +53,7 @@ public class Padel implements Entity {
     }
 
     public void addVector(float xPos, float yPos) {
-        if (padelPoints.size() < 6) {
+        if (padelPoints.size() < 10) {
             padelPoints.add(new Vector2(xPos, yPos));
             fixturePoints.add(new Vector2( getFixtureXPos(xPos),getFixtureYPos(yPos)));
         }

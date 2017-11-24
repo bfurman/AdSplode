@@ -3,6 +3,7 @@ package Blocks;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -15,6 +16,7 @@ import com.mygdx.game.EntityStrategy;
 import Behaviors.BasicBehavior;
 import Constants.EntityType;
 import Constants.PhysicsConstants;
+import Constants.Utilities;
 
 /**
  * Created by Bradley on 9/10/2016.
@@ -36,8 +38,8 @@ public class BasicBlock extends Block {
         BodyDef bodyDef4 = new BodyDef();
         bodyDef4.type = BodyDef.BodyType.StaticBody;
 
-        width = 50;
-        height = 40;
+        width = Utilities.BLOCK_WIDTH;
+        height = Utilities.BLOCK_HEIGHT;
         color = Color.NAVY;
 
         bodyDef4.position.set(xPos, yPos);
@@ -63,12 +65,12 @@ public class BasicBlock extends Block {
         //NOTE SHAPERENDERER USES ACTUAL PIXELS NOT PIXELS TO METERS LIEK THE REST OF LIBGDX
 
         batch.setProjectionMatrix(camera);
-
+        Vector2 position = Utilities.positionCalc(body, width, height);
         batch.setColor(color);
         batch.begin(ShapeRenderer.ShapeType.Filled);
 
-        batch.rect(body.getPosition().x * PIXELS_TO_METERS - width/2,
-                body.getPosition().y * PIXELS_TO_METERS - height/2,
+        batch.rect(position.x,
+                position.y,
                 width, height);
         batch.end();
     }
